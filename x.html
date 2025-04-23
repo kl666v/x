@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🎲SneaX™ / 2025🎲</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background-primary: #36393f;
+      --background-secondary: #1a1a1e;
+      --background-tertiary: #202225;
+      --background-accent: #40444b;
+      --text-normal: #dcddde;
+      --text-muted: #a3a6aa;
+      --text-link: #00aff4;
+      --brand: #5865f2;
+      --brand-hover: #4752c4;
+      --spoiler-bg: rgba(32, 34, 37, 0.5);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      background-color: var(--background-primary);
+      color: var(--text-normal);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      gap: 20px;
+    }
+    
+    header {
+      grid-column: 1 / -1;
+      margin-bottom: 10px;
+    }
+    
+    h1 {
+      color: white;
+      font-weight: 700;
+      font-size: 28px;
+      margin-bottom: 5px;
+    }
+    
+    .subtitle {
+      color: var(--text-muted);
+      font-weight: 400;
+      font-size: 16px;
+    }
+    
+    .panel {
+      background-color: var(--background-secondary);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    
+    .panel-header {
+      padding: 16px;
+      border-bottom: 1px solid var(--background-tertiary);
+      background-color: var(--background-tertiary);
+    }
+    
+    .panel-title {
+      font-weight: 600;
+      font-size: 16px;
+      color: white;
+    }
+    
+    .panel-body {
+      padding: 16px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    input, textarea, select {
+      width: 100%;
+      padding: 12px;
+      background-color: var(--background-tertiary);
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      border-radius: 4px;
+      color: var(--text-normal);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      transition: border-color 0.2s;
+    }
+    
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--brand);
+    }
+    
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+    
+    .btn {
+      background-color: var(--brand);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      font-size: 14px;
+      transition: background-color 0.2s;
+    }
+    
+    .btn:hover {
+      background-color: var(--brand-hover);
+    }
+    
+    .btn-secondary {
+      background-color: var(--background-accent);
+    }
+    
+    .btn-secondary:hover {
+      background-color: var(--background-tertiary);
+    }
+    
+    /* Message styling */
+    .message {
+      display: flex;
+      padding: 8px 16px;
+      position: relative;
+    }
+    
+    .message:hover {
+      background-color: rgba(79, 84, 92, 0.16);
+    }
+    
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 16px;
+      flex-shrink: 0;
+      object-fit: cover;
+    }
+    
+    .message-content {
+      flex-grow: 1;
+      min-width: 0;
+    }
+    
+    .message-header {
+      display: flex;
+      align-items: baseline;
+      margin-bottom: 2px;
+    }
+    
+    .username {
+      font-weight: 600;
+      color: white;
+      margin-right: 6px;
+    }
+    
+    .timestamp {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    
+    .message-text {
+      line-height: 1.375;
+      word-wrap: break-word;
+    }
+    
+    /* Emoji styling */
+    .emoji {
+      height: 22px;
+      width: 22px;
+      vertical-align: middle;
+      margin: 0 1px;
+      object-fit: contain;
+    }
+    
+    /* Spoiler styling */
+    .spoiler {
+      background-color: #686474;
+      color: transparent;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: color 0.2s, background-color 0.2s;
+      padding: 0 4px;
+    }
+    
+    .spoiler:hover {
+      background-color: var(--background-tertiary);
+    }
+    
+    .spoiler.revealed {
+      color: inherit;
+      background-color: transparent;
+    }
+    
+    /* Emoji form */
+    .emoji-form {
+      margin-top: 20px;
+      padding: 16px;
+      background-color: var(--background-tertiary);
+      border-radius: 8px;
+    }
+    
+    .emoji-form-title {
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: white;
+    }
+    
+    .emoji-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    
+    .emoji-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    
+    .emoji-item {
+      display: flex;
+      align-items: center;
+      background-color: var(--background-accent);
+      padding: 8px;
+      border-radius: 4px;
+      transition: background-color 0.2s;
+    }
+    
+    .emoji-item:hover {
+      background-color: var(--background-tertiary);
+    }
+    
+    .emoji-preview {
+      height: 20px;
+      width: 20px;
+      margin-right: 8px;
+      object-fit: contain;
+    }
+    
+    .emoji-name {
+      font-size: 13px;
+      font-weight: 500;
+    }
+    
+    /* Preview styling */
+    .chat-preview {
+      background-color: var(--background-secondary);
+      border-radius: 8px;
+      padding: 8px 0;
+      height: 100%;
+      overflow-y: auto;
+    }
+    
+    /* Divider */
+    .divider {
+      height: 1px;
+      background-color: var(--background-tertiary);
+      margin: 16px 0;
+    }
+    
+    /* Responsive */
+    @media (max-width: 900px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+<!-- Login overlay -->
+<div id="loginOverlay" style="
+  position: fixed;
+  inset: 0;
+  background: #1a1a1e;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+">
+  <h2 style="color: white; margin-bottom: 12px;">Enter Password</h2>
+
+  <input type="password" id="sitePassword" placeholder="Password..." style="
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    font-size: 14px;
+    outline: none;
+    width: 200px;
+    text-align: center;
+    margin-bottom: 8px;
+  " onkeydown="handleEnter(event)">
+
+  <label style="color: var(--text-muted); font-size: 13px; margin-bottom: 12px;">
+    <input type="checkbox" id="togglePassword" onclick="togglePassword()" style="margin-right: 6px;">
+    Show Password🌀
+  </label>
+
+  <button onclick="checkPassword()" style="
+    padding: 10px 20px;
+    background-color: #5865f2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+  ">Enter</button>
+
+  <p id="errorMsg" style="color: red; margin-top: 10px;"></p>
+</div>
+
+<script>
+function checkPassword() {
+  const correctPassword = "klevin";
+  const input = document.getElementById("sitePassword").value;
+  const error = document.getElementById("errorMsg");
+
+  if (input === correctPassword) {
+    document.getElementById("loginOverlay").style.display = "none";
+  } else {
+    error.textContent = "Incorrect password.";
+  }
+}
+
+function togglePassword() {
+  const input = document.getElementById("sitePassword");
+  input.type = input.type === "password" ? "text" : "password";
+}
+
+function handleEnter(event) {
+  if (event.key === "Enter") {
+    checkPassword();
+  }
+}
+</script>
+
+  <header>
+    <h1>🌀SneaX™</h1>
+    <p class="subtitle">🌠*thanks 4 the support  & join the discord 4 more🌠</p>
+  </header>
+  
+  <div class="container">
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">Message Settings</div>
+      </div>
+      <div class="panel-body">
+        <div class="form-group">
+          <label>Sender Username</label>
+          <input type="text" id="username" placeholder="SneaX" value="SneaX">
+        </div>
+        
+        <div class="form-group">
+          <label>Avatar URL</label>
+          <input type="text" id="avatar" placeholder="https://example.com/avatar.png" value="https://cdn.discordapp.com/embed/avatars/0.png">
+        </div>
+        
+        <div class="form-group">
+          <label>Message Content</label>
+          <textarea id="message" placeholder="Type your message here..."></textarea>
+          <small style="color: var(--text-muted); display: block; margin-top: 4px;">Use ||spoiler|| for hidden text and :emoji: for custom emojis</small>
+        </div>
+        
+        <div class="form-group">
+          <label>Timestamp</label>
+          <input type="text" id="timestamp" placeholder="3:14 PM" value="3:14 PM">
+        </div>
+        
+        <div class="divider"></div>
+        
+        <div class="form-group">
+          <label>Reply Username</label>
+          <input type="text" id="replyUser" placeholder="kl666v" value="kl666v">
+        </div>
+        
+        <div class="form-group">
+          <label>Reply Avatar URL</label>
+          <input type="text" id="replyAvatar" placeholder="https://example.com/avatar2.png" value="https://cdn.discordapp.com/embed/avatars/1.png">
+        </div>
+        
+        <div class="form-group">
+          <label>Reply Message</label>
+          <textarea id="replyMsg" placeholder="Type reply message..."></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label>Reply Timestamp</label>
+          <input type="text" id="replyTimestamp" placeholder="3:16 PM" value="3:16 PM">
+        </div>
+        
+        <div class="emoji-form">
+          <div class="emoji-form-title">Custom Emojis</div>
+          <div class="emoji-grid">
+            <div class="form-group">
+              <label>Emoji Name</label>
+              <input type="text" id="emojiName" placeholder="🌀">
+            </div>
+            <div class="form-group">
+              <label>Emoji Image URL</label>
+              <input type="text" id="emojiUrl" placeholder="https://example.com/emoji.png">
+            </div>
+          </div>
+          <button class="btn btn-secondary" onclick="addEmoji()">Add Custom Emoji</button>
+          
+          <div class="emoji-list" id="emojiList"></div>
+        </div>
+        
+        <button class="btn" onclick="generateFake()">Generate Preview</button>
+      </div>
+    </div>
+    
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">Preview</div>
+      </div>
+      <div class="chat-preview" id="previewBox">
+        <!-- Preview will be generated here -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Store custom emojis
+    let customEmojis = {};
+    
+    // Add emoji to the list
+    function addEmoji() {
+      const name = document.getElementById('emojiName').value.trim();
+      const url = document.getElementById('emojiUrl').value.trim();
+      
+      if (name && url) {
+        customEmojis[name] = url;
+        updateEmojiList();
+        document.getElementById('emojiName').value = '';
+        document.getElementById('emojiUrl').value = '';
+      }
+    }
+    
+    // Update the emoji list display
+    function updateEmojiList() {
+      const emojiList = document.getElementById('emojiList');
+      emojiList.innerHTML = '';
+      
+      for (const [name, url] of Object.entries(customEmojis)) {
+        const emojiItem = document.createElement('div');
+        emojiItem.className = 'emoji-item';
+        emojiItem.innerHTML = `
+          <img class="emoji-preview" src="${url}" alt=":${name}:">
+          <span class="emoji-name">:${name}:</span>
+        `;
+        emojiList.appendChild(emojiItem);
+      }
+    }
+    
+    // Parse message with spoilers and custom emojis
+    function parseMessage(text) {
+      // Spoiler
+      text = text.replace(/\|\|([^|]+)\|\|/g, '<span class="spoiler" onclick="this.classList.add(\'revealed\')">$1</span>');
+      
+      // Custom emojis
+      text = text.replace(/:([a-zA-Z0-9_]+):/g, (match, p1) => {
+        if (customEmojis[p1]) {
+          return `<img class="emoji" src="${customEmojis[p1]}" alt=":${p1}:">`;
+        }
+        return match;
+      });
+      
+      return text;
+    }
+
+    function generateFake() {
+      const previewBox = document.getElementById('previewBox');
+      previewBox.innerHTML = '';
+      
+      // Get form values
+      const username = document.getElementById('username').value || 'User#0000';
+      const message = document.getElementById('message').value || '';
+      const timestamp = document.getElementById('timestamp').value || '3:14 PM';
+      const avatarURL = document.getElementById('avatar').value || 'https://cdn.discordapp.com/embed/avatars/0.png';
+
+      const replyUser = document.getElementById('replyUser').value || 'Friend#0000';
+      const replyMsg = document.getElementById('replyMsg').value || '';
+      const replyTimestamp = document.getElementById('replyTimestamp').value || '3:16 PM';
+      const replyAvatar = document.getElementById('replyAvatar').value || 'https://cdn.discordapp.com/embed/avatars/1.png';
+
+      // Create main message
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'message';
+      
+      const avatarImg = document.createElement('img');
+      avatarImg.className = 'avatar';
+      avatarImg.src = avatarURL;
+      avatarImg.alt = 'avatar';
+      
+      const messageContent = document.createElement('div');
+      messageContent.className = 'message-content';
+      
+      const messageHeader = document.createElement('div');
+      messageHeader.className = 'message-header';
+      
+      const usernameSpan = document.createElement('span');
+      usernameSpan.className = 'username';
+      usernameSpan.textContent = username;
+      
+      const timestampSpan = document.createElement('span');
+      timestampSpan.className = 'timestamp';
+      timestampSpan.textContent = timestamp;
+      
+      const messageText = document.createElement('div');
+      messageText.className = 'message-text';
+      messageText.innerHTML = parseMessage(message);
+      
+      // Assemble message
+      messageHeader.appendChild(usernameSpan);
+      messageHeader.appendChild(timestampSpan);
+      
+      messageContent.appendChild(messageHeader);
+      messageContent.appendChild(messageText);
+      
+      messageDiv.appendChild(avatarImg);
+      messageDiv.appendChild(messageContent);
+      
+      previewBox.appendChild(messageDiv);
+      
+      // Create reply message
+      const replyDiv = document.createElement('div');
+      replyDiv.className = 'message';
+      
+      const replyAvatarImg = document.createElement('img');
+      replyAvatarImg.className = 'avatar';
+      replyAvatarImg.src = replyAvatar;
+      replyAvatarImg.alt = 'avatar';
+      
+      const replyContent = document.createElement('div');
+      replyContent.className = 'message-content';
+      
+      const replyHeader = document.createElement('div');
+      replyHeader.className = 'message-header';
+      
+      const replyUsernameSpan = document.createElement('span');
+      replyUsernameSpan.className = 'username';
+      replyUsernameSpan.textContent = replyUser;
+      
+      const replyTimestampSpan = document.createElement('span');
+      replyTimestampSpan.className = 'timestamp';
+      replyTimestampSpan.textContent = replyTimestamp;
+      
+      const replyText = document.createElement('div');
+      replyText.className = 'message-text';
+      replyText.innerHTML = parseMessage(replyMsg);
+      
+      // Assemble reply
+      replyHeader.appendChild(replyUsernameSpan);
+      replyHeader.appendChild(replyTimestampSpan);
+      
+      replyContent.appendChild(replyHeader);
+      replyContent.appendChild(replyText);
+      
+      replyDiv.appendChild(replyAvatarImg);
+      replyDiv.appendChild(replyContent);
+      
+      previewBox.appendChild(replyDiv);
+    }
+    
+    // Initialize
+    window.onload = function() {
+      updateEmojiList();
+      generateFake();
+    };
+  </script>
+</body>
+</html>
